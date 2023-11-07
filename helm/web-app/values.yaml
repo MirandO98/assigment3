@@ -48,7 +48,6 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-central-1:313422618945:certificate/9a85fcdb-a40d-48f7-9b6a-89ad27387001
-    alb.ingress.kubernetes.io/tags: Name=devops-training, Environment=dev
     alb.ingress.kubernetes.io/group.name: devops-training
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
@@ -59,7 +58,7 @@ ingress:
     - host: mirand-assignment3.appstellar.training
       paths:
         - path: /
-          pathType: prefix
+          pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
