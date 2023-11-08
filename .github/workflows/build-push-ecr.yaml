@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: mirand-assignment3
+  IMAGE_NAME: mirand-assigment3
 
 jobs:
   build-push-ecr:
