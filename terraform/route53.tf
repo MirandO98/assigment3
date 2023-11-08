@@ -18,7 +18,7 @@ resource "aws_route53_record" "www" {
 data "aws_lb""this" {
 
   tags = {
-  name        =  "devops-training"
+  Name        =  "devops-training"
   Enviornment = "dev"
 }
 }
