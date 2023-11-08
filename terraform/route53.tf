@@ -15,7 +15,7 @@ resource "aws_route53_record" "www" {
   records =[data.aws_lb.this.dns_name]
 }
 
-data "aws_lb""this" {
+data "aws_lb" "this" {
 
   tags = {
   Name = "devops-training"
