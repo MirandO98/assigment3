@@ -8,7 +8,7 @@ image:
   repository: 313422618945.dkr.ecr.eu-central-1.amazonaws.com/mirand-assigment3
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 0de5e9d288fde672b780e78c30557911e5268b7b
+  tag: 542500863b14b0dfb6196f087e443022a8a94340
 
 imagePullSecrets: []
 nameOverride: ""
