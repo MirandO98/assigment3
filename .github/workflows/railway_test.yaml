@@ -21,6 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd web-app/web-app 
+          npm build
           npm install
 
       - name: Install Railway CLI
