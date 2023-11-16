@@ -2,32 +2,31 @@ name: Node.js CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js 16
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: 'npm'
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Install node_modules
-      run: |
-        cd web-app/web-app
-        npm install
+      - name: Install Node.js 17.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 17.x
 
-    - name: Install Railway
-      run: npm i -g @railway/cli
+      - name: Install dependencies
+        run: |
+          cd web-app/web-app 
+          npm install
 
-    - name: Deploy
-      run: railway up
-      env:
-        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy
+        run: railway up
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
