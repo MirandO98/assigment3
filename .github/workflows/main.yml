@@ -1,0 +1,42 @@
+name: Mirror Network-Automation to mirror_test
+
+on:
+  # Trigger the workflow on push events to the main branch
+  push:
+    branches: [ main ]
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout the Network-Automation repository
+      - uses: actions/checkout@v3
+
+      # 2. Install required dependencies for the chosen action (if necessary)
+      # Refer to the action's documentation for specific instructions
+
+      # 3. Use the chosen action with appropriate configuration
+      # Example for repository-mirroring-action:
+      - uses: evandroborba/repository-mirroring-action@v1
+        with:
+          source: 'MirandO98/assigment3'  # Replace with your username
+          token: ${{ secrets.PAT_TOKEN }}
+          destination: 'MirandO98/mirror_test'  # Replace with your username
+          branch: 'main'  # Optional: Specific branch to mirror
+
+      # Example for yesolutions/mirror-action (using SSH):
+      # - uses: yesolutions/mirror-action@master
+      #   with:
+      #     REMOTE: git@github.com:owner/mirror_test.git  # Replace with your username
+      #     GIT_SSH_PRIVATE_KEY: ${{ secrets.GITHUB_TOKEN }}
+      #     GIT_SSH_KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}  # If required
+
+      # Example for pixta-dev/repository-mirroring-action:
+      # - uses: pixta-dev/repository-mirroring-action@master
+      #   with:
+      #     source: https://github.com/owner/Network-Automation.git  # Replace with your username
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     target: https://github.com/owner/mirror_test.git  # Replace with your username
+      #     branch: 'main'  # Optional: Specific branch to mirror
+
+    # Optional: Add steps for handling errors, notifications, etc.
