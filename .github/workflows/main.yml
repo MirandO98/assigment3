@@ -1,36 +1,20 @@
-name: Mirror Changes
-
+name: 'mirror'
 on:
   push:
     branches:
-      - main  
+        - __mirror
+  #schedule:
+    #- cron: '* 3 * * *'
+  workflow_dispatch:
 
 jobs:
-  mirror_changes:
+  mirror:
     runs-on: ubuntu-latest
-
+    name: mirror
     steps:
-      - name: Checkout assig3 repository
-        uses: actions/checkout@v2
+      - name: mirror
+        id: mirror
+        uses: bridgelightcloud/github-mirror-action@v1
         with:
-          ref: ${{ github.ref }}
-          fetch-depth: 0  
-
-      - name: Configure Git
-        run: |
-          git config --global user.name "Mirand Osmani"
-          git config --global user.email "osmanimirand@gmail.com"
-
-      - name: Mirror changes to mirror_test repository
-        env:
-          GIT_TOKEN: ${{ secrets.PAT_TOKEN }} 
-        run: |
-          git remote add mirror_test https://github.com/MirandO98/mirror_test.git
-          git push -u mirror_test HEAD:main  # Push to target branch
-
-
-
-          
-          
-          
-          
+          origin: 'https://github.com/MirandO98/mirror_test.git'
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
