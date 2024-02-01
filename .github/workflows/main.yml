@@ -1,20 +1,24 @@
-name: 'mirror'
+name: Mirror Repository on Push
+
 on:
   push:
-    branches:
-        - main
-  #schedule:
-    #- cron: '* 3 * * *'
-  workflow_dispatch:
+    branches: [main]  # Replace with your desired branch
 
 jobs:
   mirror:
     runs-on: ubuntu-latest
-    name: mirror
     steps:
-      - name: mirror
-        id: mirror
-        uses: bridgelightcloud/github-mirror-action@v1
+      - uses: actions/checkout@v3
+      - name: Mirror Repository
+        run: |
+          git clone --mirror https://github.com/MirandO98/assigment3.git
+          cd assigment3.git/
+          git remote set-url --push origin https://github.com/MirandO98/mirror_test.git
+          git fetch -p origin
+          git push --mirror
+      - name: Comment on Push
+        uses: peter-evans/create-or-update-comment@v4
         with:
-          origin: 'https://github.com/MirandO98/mirror_test.git'
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Repository mirrored successfully! :rocket:
