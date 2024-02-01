@@ -2,23 +2,24 @@ name: Mirror Repository on Push
 
 on:
   push:
-    branches: [main]  # Replace with your desired branch
+    branches:
+      - main
 
 jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Mirror Repository
-        run: |
-          git clone --mirror https://github.com/MirandO98/assigment3.git
-          cd assigment3.git/
-          git remote set-url --push origin https://github.com/MirandO98/mirror_test.git
-          git fetch -p origin
-          git push --mirror
-      - name: Comment on Push
-        uses: peter-evans/create-or-update-comment@v4
-        with:
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            Repository mirrored successfully! :rocket:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Mirror repository to mirror_test
+      env:
+        TARGET_REPO: 'MirandO98/mirror_test' # Replace YOUR_USERNAME with your actual GitHub username
+        TARGET_BRANCH: 'main'
+        SOURCE_DIR: '.' # Current directory
+        PAT: ${{ secrets.MIRROR_REPO_TOKEN }} # Use the PAT you stored as a secret
+      run: |
+        git config --global user.email "osmanimirand@gmail.com" # Replace with your email
+        git config --global user.name "Mirand Osmani" # Replace with your name
+        git remote add target https://${PAT}@github.com/${TARGET_REPO}.git
+        git push target HEAD:${TARGET_BRANCH} --force
