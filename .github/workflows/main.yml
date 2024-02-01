@@ -2,7 +2,7 @@ name: 'mirror'
 on:
   push:
     branches:
-        - __mirror
+        - main
   #schedule:
     #- cron: '* 3 * * *'
   workflow_dispatch:
