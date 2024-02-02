@@ -1,32 +1,29 @@
-name: Mirror Repo to Another Repo
+name: Mirror Repository on Push
 
 on:
   push:
     branches:
       - main
 
+
+permissions:
+  contents: write      
+
 jobs:
-  mirror-repo:
+  mirror:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source repo
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Configure Git
-        run: |
-          git config user.name "MirandOsmani"
-          git config user.email "osmanimirand@gmail.com"
-
-      - name: Clone target repo
-        run: |
-          git clone --mirror https://github.com/MirandO98/assigment3.git
-          cd assigment3.git
-          git remote set-url --push origin https://github.com/MirandO98/mirror_test.git
-          git fetch -p origin
-          git push --mirror
-
-          #making repo public
-          
-          
-
-      
+    - name: Mirror repository to test_branch
+      env:
+        TARGET_REPO: 'MirandO98/test_branch' 
+        TARGET_BRANCH: 'main'
+        SOURCE_DIR: '.' # Current directory
+        PAT: ${{ secrets.MIRROR_REPO_TOKEN }} # Use the PAT you stored as a secret
+      run: |
+        git config --global user.email "osmanimirand@gmail.com" # Replace with your email
+        git config --global user.name "Mirand Osmani" # Replace with your name
+        git remote add test_branch https://${PAT}@github.com/${TARGET_REPO}.git
+        git push test_branch HEAD:${TARGET_BRANCH} --force
