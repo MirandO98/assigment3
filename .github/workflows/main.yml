@@ -16,10 +16,10 @@ jobs:
       env:
         TARGET_REPO: 'MirandO98/mirror_test'
         TARGET_BRANCH: 'main'
-        SOURCE_DIR: '.' #root dir.
-        PAT: ${{ secrets.PAT }} # Personal secret name - need to add on Github Secrets
+        SOURCE_DIR: '.'
       run: |
         git config --global user.email "osmanimirand@gmail.com"
         git config --global user.name "MirandOsmani"
-        git remote add target https://${PAT}@github.com/${TARGET_REPO}.git
+        # Use secrets.GITHUB_TOKEN directly in the HTTPS URL for authentication
+        git remote add target https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${TARGET_REPO}.git
         git push target HEAD:${TARGET_BRANCH} --force
