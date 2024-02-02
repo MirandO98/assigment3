@@ -27,3 +27,5 @@ jobs:
           git config --global user.name "MirandOsmani"
           git remote add target https://${MY_PAT}@github.com/${TARGET_REPO}.git
           git push target HEAD:${TARGET_BRANCH} --force
+
+          #admin PAT with admin.
