@@ -21,7 +21,7 @@ jobs:
         run: |
           git clone --mirror https://github.com/MirandO98/assigment3.git
           cd assigment3.git
-          git remote set-url --push origin https://github.com/MirandO98/mirror_test
+          git remote set-url --push origin https://github.com/MirandO98/mirror_test.git
           git fetch -p origin
           git push --mirror
 
