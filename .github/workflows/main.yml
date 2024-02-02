@@ -1,31 +1,30 @@
-name: Mirror testing
+name: CI
 
 on:
   push:
-    branches:
-      - main
-
-permissions:
-  contents: write  # This line explicitly sets the token's permissions to write
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  mirror-frontend:
+  build:
     runs-on: ubuntu-latest
+    container: pandoc/latex    # "ubuntu" is a more generic container
+                               # using "pandoc/latex" because of dependencies
+                               # used in the specific "build.sh"
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # This ensures you have the full git history for pushing
-
-      - name: Push to mirror_test repo
+      - uses: actions/checkout@v2
+      - name: creates output
+        run:  sh ./build.sh # some command from your repository that creates
+                            # output to "source-directory" ("output" in the example)
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
         env:
-          TARGET_REPO: 'MirandO98/mirror_test'
-          TARGET_BRANCH: 'main'
-          MY_PAT: ${{ secrets.PAT }}  
-        run: |
-          git config --global user.email "osmanimirand@gmail.com"
-          git config --global user.name "MirandOsmani"
-          git remote add target https://${MY_PAT}@github.com/${TARGET_REPO}.git
-          git push target HEAD:${TARGET_BRANCH} --force
-
-          #admin PAT with admin.
+          
+          API_TOKEN_GITHUB: ${{ secrets.PAT }}
+        with:
+          source-directory: .
+          destination-github-username: 'MirandO98'
+          destination-repository-name: 'MirandO98/mirror_test'
+          user-email: osmanimirand@gmail.com
+          target-branch: main
