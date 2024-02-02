@@ -19,13 +19,12 @@ jobs:
 
       - name: Clone target repo
         run: |
-          git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository_owner }}/mirror_test
+          git clone -mirror https://github.com/MirandO98/assigment3.git
+          cd assigment3.git
+          git remote set-url --push origin https://github.com/MirandO98/mirror_test
+          git fetch -p origin
+          git push --mirror
+          
+          
 
-      - name: Mirror files
-        run: |
-          cd mirror_test
-          rm -rf *
-          cp -R ../. .
-          git add .
-          git commit -m "Mirroring from assigment3 repo"
-          git push origin main
+      
