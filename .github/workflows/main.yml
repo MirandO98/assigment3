@@ -23,8 +23,11 @@ jobs:
         PAT: ${{ secrets.MIRROR_REPO_TOKEN }}
        
       run: |
-       
-        git config --global user.email "osmanimirand@gmail.com" # Replace with your email
-        git config --global user.name "Mirand Osmani" # Replace with your name
-        git remote add test_branch https://${PAT}@github.com/${TARGET_REPO}.git
-        git push test_branch HEAD:${TARGET_BRANCH} --force
+        git config --global user.email "osmanimirand@gmail.com"
+        git config --global user.name "MirandO98"   
+        git clone --mirror https://github.com/MirandO98/assigment3.git
+        cd assigment3.git
+        git remote set-url --push origin https://github.com/MirandO98/test_branch
+        git fetch -p origin
+        git push --mirror
+        
