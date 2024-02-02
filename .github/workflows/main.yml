@@ -5,7 +5,9 @@ on:
     branches:
       - main
      
-
+permissions:
+    contents: write
+                
 jobs:
   mirror:
     runs-on: ubuntu-latest
@@ -19,8 +21,7 @@ jobs:
         TARGET_BRANCH: 'main'
         SOURCE_DIR: '.' # Current directory
         PAT: ${{ secrets.MIRROR_REPO_TOKEN }}
-        permissions:
-            contents: write
+       
       run: |
         git config --global user.email "osmanimirand@gmail.com" # Replace with your email
         git config --global user.name "Mirand Osmani" # Replace with your name
