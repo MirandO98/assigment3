@@ -23,6 +23,7 @@ jobs:
         PAT: ${{ secrets.MIRROR_REPO_TOKEN }}
        
       run: |
+        git remote add origin https://MirandO98:PERSONAL_ACCESS_TOKEN@github.com/MirandO98/test_branch.git
         git remote set-url origin https://github.com/MirandO98/test_branch.git
         git config --global user.email "osmanimirand@gmail.com" # Replace with your email
         git config --global user.name "Mirand Osmani" # Replace with your name
