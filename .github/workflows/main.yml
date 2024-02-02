@@ -24,6 +24,8 @@ jobs:
           git remote set-url --push origin https://github.com/MirandO98/mirror_test
           git fetch -p origin
           git push --mirror
+
+          #making repo public
           
           
 
