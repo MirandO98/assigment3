@@ -5,25 +5,25 @@ on:
     branches:
       - main
 
-permissions: 
+permissions:
   contents: write  # This line explicitly sets the token's permissions to write
 
 jobs:
   mirror-frontend:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # This may be necessary to ensure you have the full git history for pushing
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # This ensures you have the full git history for pushing
 
-    - name: Push to mirror_test repo
-      env:
-        TARGET_REPO: 'MirandO98/mirror_test'
-        TARGET_BRANCH: 'main'
-      run: |
-        git config --global user.email "osmanimirand@gmail.com"
-        git config --global user.name "MirandOsmani"
-        # Use the GITHUB_TOKEN with write permissions for authentication
-        git remote add target https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${TARGET_REPO}.git
-        git push target HEAD:${TARGET_BRANCH} --force
+      - name: Push to mirror_test repo
+        env:
+          TARGET_REPO: 'MirandO98/mirror_test'
+          TARGET_BRANCH: 'main'
+          MY_PAT: ${{ secrets.PAT }}  
+        run: |
+          git config --global user.email "osmanimirand@gmail.com"
+          git config --global user.name "MirandOsmani"
+          git remote add target https://${MY_PAT}@github.com/${TARGET_REPO}.git
+          git push target HEAD:${TARGET_BRANCH} --force
