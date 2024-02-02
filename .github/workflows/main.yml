@@ -1,30 +1,31 @@
-name: CI
+name: Mirror Repo to Another Repo
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build:
+  mirror-repo:
     runs-on: ubuntu-latest
-    container: pandoc/latex    # "ubuntu" is a more generic container
-                               # using "pandoc/latex" because of dependencies
-                               # used in the specific "build.sh"
     steps:
-      - uses: actions/checkout@v2
-      #- name: creates output
-        #run:  sh ./build.sh # some command from your repository that creates
-                            # output to "source-directory" ("output" in the example)
-      - name: Pushes to another repository
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          
-          API_TOKEN_GITHUB: ${{ secrets.PAT }}
-        with:
-          source-directory: .
-          destination-github-username: 'MirandO98'
-          destination-repository-name: 'MirandO98/mirror_test'
-          user-email: osmanimirand@gmail.com
-          target-branch: main
+      - name: Checkout source repo
+        uses: actions/checkout@v3
+
+      - name: Configure Git
+        run: |
+          git config user.name "MirandOsmani"
+          git config user.email "osmanimirand@gmail.com"
+
+      - name: Clone target repo
+        run: |
+          git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository_owner }}/MirandO98/mirror_test.git
+
+      - name: Mirror files
+        run: |
+          cd mirror_test
+          rm -rf *
+          cp -R ../. .
+          git add .
+          git commit -m "Mirroring from assigment3 repo"
+          git push origin main
